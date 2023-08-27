@@ -1,0 +1,69 @@
+<div class="custom-container mt-5" style="width: 97%; margin: 0 auto; padding: 0">
+  <div class="head-form">
+    <h2>Servicios 🏬🌆</h2>
+    <input type="text" id="input" class="form-control" placeholder="Buscar residencia" [(ngModel)]="residencia">
+    <input type="text" id="input" class="form-control" placeholder="Buscar torre" [(ngModel)]="torre">
+    <input type="text" id="input" class="form-control" placeholder="Buscar nombre" [(ngModel)]="nombre">
+    <!-- <input type="date" class="form-control" [(ngModel)]="fecha"> -->
+
+
+    <select class="form-select" [(ngModel)]="estadoMensaje">
+      <option value="">Todos</option>
+      <option value="enviado">Enviado</option>
+      <option value="sin enviar">Sin Enviar</option>
+    </select>
+    <button class="btn" id="filtrar" type="button" (click)="filtrarTorres()">Filtrar <i class="fa fa-filter"
+        aria-hidden="true"></i></button>
+    <button class="btn" id="limpiar" type="button" (click)="limpiarFiltros()">Limpiar Filtros <i class="fa fa-broom"
+        aria-hidden="true"></i></button>
+
+
+  </div>
+
+  <ng-container *ngIf="isLoadingbd; else content">
+    <!-- Spinner de carga -->
+    <div class="loading">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  </ng-container>
+
+
+  <ng-template #content>
+    <table class="table">
+      <thead>
+        <tr class="trs">
+          <th>Residencia</th>
+          <th># Torre</th>
+          <th># Apto</th>
+          <th>Fecha</th>
+          <th>Nombre</th>
+          <th>Celular</th>
+          <th>Nivel de Infestación</th>
+          <th>Recomendaciones/comentario</th>
+          <th>Certificado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let torre of (torresFiltradas.length > 0 ? torresFiltradas : torres)">
+          <td>{{ torre.residencia }}</td>
+          <td>{{ torre.nombre }}</td>
+          <td>{{ torre.apto }}</td>
+          <td>{{ torre.fecha | date:'dd/MM/yyyy' }}</td>
+          <td>{{ torre.nombrePersona }}</td>
+          <td>{{ torre.celular }}</td>
+          <td class="infestacion" [ngClass]="{ 
+          'baja': torre.nivelInfestacion === 'baja',
+          'mode': torre.nivelInfestacion === 'moderada',
+          'alta': torre.nivelInfestacion === 'alta',
+          'muyalta': torre.nivelInfestacion === 'muyalta'}">{{ torre.nivelInfestacion }}</td>
+          <td>{{ torre.recomendaciones }}</td>
+          <td class="estado"
+            [ngClass]="{'enviado': torre.estadoMensaje === 'enviado', 'no-enviado': torre.estadoMensaje !== 'sin enviar'}">
+            {{ torre.estadoMensaje }}
+          </td>
+          
+        </tr>
+      </tbody>
+    </table>
+
+</ng-template>
