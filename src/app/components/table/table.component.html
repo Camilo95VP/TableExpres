@@ -37,10 +37,10 @@
           <th># Apto</th>
           <th>Fecha</th>
           <th>Nombre</th>
-          <th>Celular</th>
           <th>Nivel de Infestación</th>
           <th>Recomendaciones/comentario</th>
           <th>Certificado</th>
+          <th>Técnico</th>
         </tr>
       </thead>
       <tbody>
@@ -50,7 +50,6 @@
           <td>{{ torre.apto }}</td>
           <td>{{ torre.fecha | date:'dd/MM/yyyy' }}</td>
           <td>{{ torre.nombrePersona }}</td>
-          <td>{{ torre.celular }}</td>
           <td class="infestacion" [ngClass]="{ 
           'baja': torre.nivelInfestacion === 'baja',
           'mode': torre.nivelInfestacion === 'moderada',
@@ -61,6 +60,7 @@
             [ngClass]="{'enviado': torre.estadoMensaje === 'enviado', 'no-enviado': torre.estadoMensaje !== 'sin enviar'}">
             {{ torre.estadoMensaje }}
           </td>
+          <td>{{torre.tecnico}}</td>
           
         </tr>
       </tbody>
